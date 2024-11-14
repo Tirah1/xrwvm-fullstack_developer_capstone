@@ -99,12 +99,22 @@ def get_cars(request):
 # a list of dealerships
 # def get_dealerships(request):
 def get_dealerships(request, state="All"):
-    if(state == "All"):
+    if state == "All":
         endpoint = "/fetchDealers"
     else:
-        endpoint = "/fetchDealers/"+state
+        endpoint = f"/fetchDealers/{state}"
+    
+    # Fetch data from the endpoint
     dealerships = get_request(endpoint)
-    return JsonResponse({"status":200,"dealers":dealerships})
+    
+    # Debugging print statement
+    print("Dealerships data received:", dealerships)
+    
+    # Check if data is returned and correctly formatted
+    if not dealerships:
+        print("No dealerships found or data fetch error occurred.")
+    
+    return JsonResponse({"status": 200, "dealers": dealerships})
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 def get_dealer_reviews(request,dealer_id):
