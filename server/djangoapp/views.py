@@ -9,10 +9,8 @@ from .populate import initiate
 from .models import CarMake, CarModel
 from .restapis import get_request, analyze_review_sentiments, post_review
 
-
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
-
 
 # Create a `login_user` view to handle sign-in request
 @csrf_exempt
@@ -33,13 +31,11 @@ def login_user(request):
     
     return JsonResponse(response_data)
 
-
 # Create a `logout_request` view to handle sign-out request
 def logout_request(request):
     """Handle user logout."""
     logout(request)
     return JsonResponse({"userName": ""})
-
 
 # Create a `registration` view to handle sign-up request
 @csrf_exempt
@@ -63,13 +59,13 @@ def registration(request):
     
     if not username_exist:
         # Create user if new
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
-                                        password=password, email=email)
+        user = User.objects.create_user(username=username, first_name=first_name,
+                                        last_name=last_name, password=password,
+                                        email=email)
         login(request, user)
         return JsonResponse({"userName": username, "status": "Authenticated"})
     else:
         return JsonResponse({"userName": username, "error": "Already Registered"})
-
 
 def get_cars(request):
     """Fetch car models and makes."""
@@ -79,10 +75,10 @@ def get_cars(request):
         initiate()
     
     car_models = CarModel.objects.select_related('car_make')
-    cars = [{"CarModel": car_model.name, "CarMake": car_model.car_make.name} for car_model in car_models]
+    cars = [{"CarModel": car_model.name, "CarMake": car_model.car_make.name}
+            for car_model in car_models]
     
     return JsonResponse({"CarModels": cars})
-
 
 def get_dealerships(request, state="All"):
     """Fetch dealerships."""
@@ -96,7 +92,6 @@ def get_dealerships(request, state="All"):
     
     return JsonResponse({"status": 200, "dealers": dealerships})
 
-
 def get_dealer_details(request, dealer_id):
     """Fetch dealer details by ID."""
     if dealer_id:
@@ -105,7 +100,6 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
-
 
 def get_dealer_reviews(request, dealer_id):
     """Fetch reviews of a dealer."""
@@ -121,13 +115,12 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
-
 def add_review(request):
     """Submit a review."""
     if request.user.is_authenticated:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
         except Exception as e:
             logger.error(f"Error in posting review: {e}")
