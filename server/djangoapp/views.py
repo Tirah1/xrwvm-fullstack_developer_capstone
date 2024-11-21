@@ -12,14 +12,13 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
-# Create a `login_user` view to handle sign-in request
+
 @csrf_exempt
 def login_user(request):
     """Handle user login."""
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
-    
     # Try to authenticate the user
     user = authenticate(username=username, password=password)
     response_data = {"userName": username}
@@ -31,11 +30,13 @@ def login_user(request):
     
     return JsonResponse(response_data)
 
+
 # Create a `logout_request` view to handle sign-out request
 def logout_request(request):
     """Handle user logout."""
     logout(request)
     return JsonResponse({"userName": ""})
+
 
 # Create a `registration` view to handle sign-up request
 @csrf_exempt
@@ -67,6 +68,7 @@ def registration(request):
     else:
         return JsonResponse({"userName": username, "error": "Already Registered"})
 
+
 def get_cars(request):
     """Fetch car models and makes."""
     count = CarMake.objects.filter().count()
@@ -80,6 +82,7 @@ def get_cars(request):
     
     return JsonResponse({"CarModels": cars})
 
+
 def get_dealerships(request, state="All"):
     """Fetch dealerships."""
     endpoint = f"/fetchDealers/{state}" if state != "All" else "/fetchDealers"
@@ -92,6 +95,7 @@ def get_dealerships(request, state="All"):
     
     return JsonResponse({"status": 200, "dealers": dealerships})
 
+
 def get_dealer_details(request, dealer_id):
     """Fetch dealer details by ID."""
     if dealer_id:
@@ -100,6 +104,7 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 def get_dealer_reviews(request, dealer_id):
     """Fetch reviews of a dealer."""
@@ -114,6 +119,7 @@ def get_dealer_reviews(request, dealer_id):
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 def add_review(request):
     """Submit a review."""
