@@ -29,12 +29,13 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Remove trailing spaces from lines 33 and 34
 ALLOWED_HOSTS = [
-    'localhost', 
-    '127.0.0.1', 
+    'localhost',
+    '127.0.0.1',
     (
-        'nginajustina-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.'
-        'cognitiveclass.ai'
+        'nginajustina-8000.theiadockernext-1-labs-prod-theiak8s-4-'
+        'tor01.proxy.cognitiveclass.ai'
     ),
 ]
 
