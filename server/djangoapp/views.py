@@ -1,4 +1,4 @@
-#from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -60,9 +60,11 @@ def registration(request):
     
     if not username_exist:
         # Create user if new
-        user = User.objects.create_user(username=username, first_name=first_name,
-                                        last_name=last_name, password=password,
-                                        email=email)
+        user = User.objects.create_user(
+            username=username, first_name=first_name,
+            last_name=last_name, password=password,
+            email=email
+        )
         login(request, user)
         return JsonResponse({"userName": username, "status": "Authenticated"})
     else:
