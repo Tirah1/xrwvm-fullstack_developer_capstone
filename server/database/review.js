@@ -1,8 +1,8 @@
 /* jshint esversion: 6 */
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
+// Dealerships schema
 const dealerships = new Schema({
   id: {
     type: Number,
@@ -41,18 +41,13 @@ const dealerships = new Schema({
   }
 });
 
-module.exports = mongoose.model('dealerships', dealerships);
-
-const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
-
+// Reviews schema
 const reviews = new Schema({
-	id: {
+  id: {
     type: Number,
     required: true,
-	},
-	name: {
+  },
+  name: {
     type: String,
     required: true
   },
@@ -86,4 +81,8 @@ const reviews = new Schema({
   },
 });
 
-module.exports = mongoose.model('reviews', reviews);
+// Export both models
+module.exports = {
+  Dealership: mongoose.model('dealerships', dealerships),
+  Review: mongoose.model('reviews', reviews)
+};
