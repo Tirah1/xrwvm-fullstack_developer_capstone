@@ -11,6 +11,7 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+
 @csrf_exempt
 def login_user(request):
     """Handle user login."""
@@ -26,10 +27,12 @@ def login_user(request):
 
     return JsonResponse(response_data)
 
+
 def logout_request(request):
     """Handle user logout."""
     logout(request)
     return JsonResponse({"userName": ""})
+
 
 @csrf_exempt
 def registration(request):
@@ -68,6 +71,7 @@ def registration(request):
             "error": "Already Registered"
         })
 
+
 def get_cars(request):
     """Fetch car models and makes."""
     count = CarMake.objects.filter().count()
@@ -86,6 +90,7 @@ def get_cars(request):
 
     return JsonResponse({"CarModels": cars})
 
+
 def get_dealerships(request, state="All"):
     """Fetch dealerships."""
     endpoint = (
@@ -100,6 +105,7 @@ def get_dealerships(request, state="All"):
 
     return JsonResponse({"status": 200, "dealers": dealerships})
 
+
 def get_dealer_details(request, dealer_id):
     """Fetch dealer details by ID."""
     if dealer_id:
@@ -108,6 +114,7 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 def get_dealer_reviews(request, dealer_id):
     """Fetch reviews of a dealer."""
@@ -122,6 +129,7 @@ def get_dealer_reviews(request, dealer_id):
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 def add_review(request):
     """Submit a review."""
