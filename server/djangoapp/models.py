@@ -1,9 +1,5 @@
-# Uncomment the following imports before adding the Model code
-
 from django.db import models
-from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
-
 
 # Create your models here.
 
@@ -15,8 +11,8 @@ class CarMake(models.Model):
     founded_year = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.name} ({self.country_of_origin}) - Founded: {self.founded_year if self.founded_year else 'N/A'}"
-
+        return f"{self.name} ({self.country_of_origin}) - Founded: " \
+        f"{self.founded_year if self.founded_year else 'N/A'}"
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 class CarModel(models.Model):
@@ -33,13 +29,13 @@ class CarModel(models.Model):
         ('SPORTS_CAR', 'Sports Car'),
     ]
     type = models.CharField(max_length=15, choices=CAR_TYPES, default='SUV')
-    year = models.IntegerField(default=2023,
+    year = models.IntegerField(
+        default=2023,
         validators=[
             MaxValueValidator(2023),
             MinValueValidator(2015)
-        ])
-   
+        ]
+    )
 
     def __str__(self):
         return self.name  # Return the name as the string representation
-
