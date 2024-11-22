@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Make migrations and migrate the database.
 echo "Making migrations and migrating the database. "
